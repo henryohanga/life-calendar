@@ -4,7 +4,7 @@
   "description": "The good dates platform",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "dev": "pnpm --filter @good-dates/*-app dev"
   },
   "keywords": [],
   "author": {
