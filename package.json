@@ -1,0 +1,16 @@
+{
+  "name": "@good-dates/platform",
+  "version": "1.0.0",
+  "description": "The good dates platform",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [],
+  "author": {
+    "name": "Henry Ohanga",
+    "email": "ohanga.henry@gmail.com",
+    "url": "https://github.com/henryohanga"
+  },
+  "license": "ISC"
+}
