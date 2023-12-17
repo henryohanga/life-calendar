@@ -4,9 +4,12 @@
   "description": "The good dates platform",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --filter @good-dates/*-app dev"
+    "dev:apps": "pnpm --filter @good-dates/*-app dev",
+    "dev:api": "uvicorn api.main:app --reload --port 28000"
   },
-  "keywords": [],
+  "keywords": [
+    "good-dates"
+  ],
   "author": {
     "name": "Henry Ohanga",
     "email": "ohanga.henry@gmail.com",
