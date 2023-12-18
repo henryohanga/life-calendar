@@ -1,20 +1,6 @@
 import calendar
 
 
-def _good_date(
-    date: str,
-    sum_of_birth_date: int,
-    match_on_single_digit: bool = True,
-):
-    date = date.replace("-", "")
-    sum_of_date = _sum_digits(
-        number=int(date),
-        match_on_single_digit=match_on_single_digit,
-    )
-
-    return sum_of_date == sum_of_birth_date
-
-
 def good_dates(
     year: int,
     birth_date: str,
@@ -50,3 +36,17 @@ def _sum_digits(number: int, match_on_single_digit: bool = True) -> int:
             match_on_single_digit=match_on_single_digit,
         )
     return sum_of_digits
+
+
+def _good_date(
+    date: str,
+    sum_of_birth_date: int,
+    match_on_single_digit: bool = True,
+):
+    date = date.replace("-", "")
+    sum_of_date = _sum_digits(
+        number=int(date),
+        match_on_single_digit=match_on_single_digit,
+    )
+
+    return sum_of_date == sum_of_birth_date
