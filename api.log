@@ -260,3 +260,13 @@
 2025-01-31 00:37:41,744 [INFO] [bfa21e70-f709-425c-a832-674960be23fd] Response: 200 Process Time: 6.50ms
 2025-01-31 00:44:18,544 [INFO] [7bc8b440-aba6-48c6-b166-7bb443f88441] API Shutting down...
 2025-01-31 00:44:21,480 [INFO] [6caceffd-4a79-4073-9f12-5e9d8c8f6ff0] API Starting up...
+2025-01-31 00:50:45,899 [INFO] [004b509c-29b5-476d-bff7-b85c320140a8] Request: POST /good-dates/ Client: 127.0.0.1
+2025-01-31 00:50:45,900 [INFO] [004b509c-29b5-476d-bff7-b85c320140a8] Calculating good dates for birth_date=2332-12-01, year=2025
+2025-01-31 00:50:45,902 [INFO] [004b509c-29b5-476d-bff7-b85c320140a8] Response: 200 Process Time: 2.82ms
+2025-01-31 00:53:21,734 [INFO] [2f3bf4d5-d694-42e3-a6d5-f4ba9ec9bb5d] Request: GET /docs Client: 127.0.0.1
+2025-01-31 00:53:21,735 [INFO] [2f3bf4d5-d694-42e3-a6d5-f4ba9ec9bb5d] Response: 200 Process Time: 1.75ms
+2025-01-31 00:53:21,864 [INFO] [fb93ae78-d20c-4e5e-987d-356c57a55a7f] Request: GET /openapi.json Client: 127.0.0.1
+2025-01-31 00:53:21,892 [INFO] [fb93ae78-d20c-4e5e-987d-356c57a55a7f] Response: 200 Process Time: 28.10ms
+2025-01-31 00:58:06,019 [INFO] [95126975-857e-4419-aa49-ae8de26ce7cd] Request: POST /good-dates/ Client: 127.0.0.1
+2025-01-31 00:58:06,020 [INFO] [95126975-857e-4419-aa49-ae8de26ce7cd] Calculating good dates for birth_date=1990-05-01, year=2025
+2025-01-31 00:58:06,022 [INFO] [95126975-857e-4419-aa49-ae8de26ce7cd] Response: 200 Process Time: 2.62ms

@@ -25,7 +25,7 @@
 					</li>
 					<li>
 						<a
-							href="https://github.com/your-username/good-dates"
+							href="https://github.com/henryohanga/life-calendar"
 							target="_blank"
 							rel="noopener noreferrer"
 							class="text-base text-gray-500 hover:text-gray-900 transition-colors"
