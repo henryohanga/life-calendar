@@ -87,15 +87,16 @@
 
 					{#if error}
 						<div
-							class="rounded-lg bg-red-50 p-4 text-sm text-red-600 flex items-start"
+							class="p-4 rounded-lg bg-red-50 border border-red-200 text-red-600 flex items-center space-x-2"
 							role="alert"
 							in:fade
 						>
 							<svg
-								class="w-5 h-5 flex-shrink-0 mr-2 -mt-0.5"
+								class="w-5 h-5"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
 							>
 								<path
 									stroke-linecap="round"
