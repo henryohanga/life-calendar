@@ -5,8 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev:apps": "pnpm --filter @good-dates/*-app dev",
-    "dev:api": "uvicorn api.main:app --reload --port 28000"
+    "dev:api": "uvicorn api.main:app --reload --port 28000",
+    "dev": "pnpm dev:api & pnpm dev:apps",
+    "build": "pnpm --filter @good-dates/*-app build",
+    "test": "pnpm test:api & pnpm --filter @good-dates/*-app test",
+    "test:api": "pytest"
   },
+  "workspaces": [
+    "apps/*"
+  ],
   "keywords": [
     "good-dates"
   ],

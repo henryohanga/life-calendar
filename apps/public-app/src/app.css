@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	body {
+		@apply antialiased bg-gray-50;
+	}
+
+	input[type='date'] {
+		@apply appearance-none;
+	}
+
+	input[type='date']::-webkit-calendar-picker-indicator {
+		@apply opacity-50 hover:opacity-100 transition-opacity cursor-pointer;
+	}
+}
+
+@layer components {
+	.calendar-wrapper {
+		--ec-today-bg-color: theme(colors.indigo.50);
+		--ec-border-color: theme(colors.gray.100);
+		font-family: theme(fontFamily.sans);
+		@apply bg-white rounded-xl border border-gray-100/80 shadow-sm overflow-hidden;
+	}
+
+	.calendar-inner {
+		@apply p-2 sm:p-3;
+	}
+
+	.ec-day-grid {
+		@apply border-collapse bg-white rounded-lg overflow-hidden;
+		border-spacing: 1px;
+	}
+
+	.ec-toolbar {
+		@apply mb-4 px-4 sm:px-6 pt-4 sm:pt-6 pb-4 flex items-center justify-between 
+               bg-gradient-to-br from-gray-50/50 to-white border-b border-gray-100/80;
+	}
+
+	.ec-day {
+		@apply border border-gray-100/60 text-sm transition-all cursor-pointer relative bg-white hover:bg-gray-50/80;
+		min-height: 6rem;
+		@screen sm {
+			min-height: 7rem;
+		}
+		@screen md {
+			min-height: 8rem;
+		}
+	}
+
+	.good-date-bg {
+		@apply bg-gradient-to-br from-indigo-50/90 to-white relative !important;
+	}
+
+	.good-date-bg::after {
+		content: '✨';
+		@apply absolute top-2 right-2 text-sm text-indigo-400/90 opacity-40 transition-all;
+		transform: scale(0.9);
+	}
+
+	.good-date-bg:hover::after {
+		@apply opacity-100 text-indigo-500;
+		transform: scale(1.1);
+	}
+
+	.good-date-bg:hover {
+		@apply from-indigo-100 to-indigo-50/70 !important;
+	}
+
+	.ec-button {
+		@apply px-4 py-2 text-sm font-medium rounded-lg text-gray-600
+			   transition-all border border-gray-200 shadow-sm
+			   hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-100
+			   active:bg-indigo-50/50 active:scale-95
+			   disabled:opacity-50 disabled:cursor-not-allowed;
+	}
+
+	.ec-button-group {
+		@apply flex items-center gap-1.5;
+	}
+
+	.ec-prev,
+	.ec-next {
+		@apply hover:bg-indigo-50 rounded-lg p-1.5 transition-all;
+	}
+
+	.ec-prev::after {
+		content: '←';
+		@apply text-lg leading-none;
+	}
+
+	.ec-next::after {
+		content: '→';
+		@apply text-lg leading-none;
+	}
+
+	.ec-title {
+		@apply text-xl font-semibold text-gray-900 mx-6 min-w-[200px] text-center;
+	}
+
+	.ec-day.ec-today {
+		@apply bg-indigo-50/30 font-medium ring-1 ring-inset ring-indigo-200/50;
+	}
+
+	.ec-day-head {
+		@apply py-3 text-xs font-medium text-gray-400 uppercase tracking-wider 
+               bg-gradient-to-b from-gray-50/90 to-transparent 
+               border-b border-gray-100/80 text-center sticky top-0 z-10;
+	}
+
+	.ec-day-number {
+		@apply font-medium text-gray-700 p-2;
+	}
+
+	.ec-day.ec-other-month {
+		@apply opacity-40;
+	}
+
+	.ec-day.ec-selected {
+		@apply ring-2 ring-inset ring-indigo-500/50 bg-indigo-50/20;
+	}
+
+	.ec-day.ec-selected.good-date-bg {
+		@apply from-indigo-100/80 to-indigo-50/80;
+	}
+
+	/* Weekend styling */
+	.ec-day:nth-child(1), /* Sunday */
+	.ec-day:nth-child(7) /* Saturday */ {
+		@apply bg-gray-50/20;
+	}
+
+	/* Today indicator */
+	.ec-day.ec-today .ec-day-number::after {
+		content: 'Today';
+		@apply block text-[10px] text-indigo-500/70 font-normal mt-0.5;
+	}
+}

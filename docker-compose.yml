@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "28000:28000"
+    environment:
+      - GOOD_DATES_ADMIN_API_KEY=local-dev-key
+      - GOOD_DATES_LOG_LEVEL=DEBUG
+    volumes:
+      - ./api:/app/api
+    command: uvicorn api.main:app --host 0.0.0.0 --port 28000 --reload 
