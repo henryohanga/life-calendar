@@ -20,6 +20,8 @@
 	.calendar-wrapper {
 		--ec-today-bg-color: theme(colors.indigo.50);
 		--ec-border-color: theme(colors.gray.100);
+		--ec-event-bg-color: theme(colors.indigo.500);
+		--ec-event-border-color: theme(colors.indigo.600);
 		font-family: theme(fontFamily.sans);
 		@apply bg-white rounded-xl border border-gray-100/80 shadow-sm overflow-hidden;
 	}
@@ -50,22 +52,44 @@
 	}
 
 	.good-date-bg {
-		@apply bg-gradient-to-br from-indigo-50/90 to-white relative !important;
-	}
-
-	.good-date-bg::after {
-		content: '✨';
-		@apply absolute top-2 right-2 text-sm text-indigo-400/90 opacity-40 transition-all;
-		transform: scale(0.9);
-	}
-
-	.good-date-bg:hover::after {
-		@apply opacity-100 text-indigo-500;
-		transform: scale(1.1);
+		position: relative;
+		background: linear-gradient(
+			to bottom right,
+			rgb(99 102 241),
+			/* indigo-500 solid */ rgb(79 70 229) /* indigo-600 solid */
+		) !important;
+		border: 1px solid rgb(129 140 248) !important; /* indigo-400 */
 	}
 
 	.good-date-bg:hover {
-		@apply from-indigo-100 to-indigo-50/70 !important;
+		background: linear-gradient(
+			to bottom right,
+			rgb(129 140 248),
+			/* indigo-400 */ rgb(99 102 241) /* indigo-500 */
+		) !important;
+	}
+
+	.good-date-indicator {
+		@apply bg-gradient-to-br from-white to-indigo-50
+			   text-indigo-600
+			   rounded-full w-7 h-7
+			   flex items-center justify-center
+			   shadow-lg shadow-indigo-500/30
+			   border-2 border-white
+			   text-base
+			   transition-all duration-200
+			   hover:scale-110 hover:shadow-indigo-500/40;
+		transform-origin: center;
+	}
+
+	.ec-day:hover .good-date-indicator {
+		@apply scale-110 rotate-12;
+	}
+
+	/* Remove duplicate styles */
+	.good-date-bg::before,
+	.good-date-bg::after {
+		display: none;
 	}
 
 	.ec-button {
@@ -100,7 +124,11 @@
 	}
 
 	.ec-day.ec-today {
-		@apply bg-indigo-50/30 font-medium ring-1 ring-inset ring-indigo-200/50;
+		@apply bg-teal-50/70 ring-1 ring-inset ring-teal-200/50;
+	}
+
+	.ec-day.ec-today .ec-day-number {
+		@apply text-teal-700 font-medium;
 	}
 
 	.ec-day-head {
@@ -134,6 +162,46 @@
 	/* Today indicator */
 	.ec-day.ec-today .ec-day-number::after {
 		content: 'Today';
-		@apply block text-[10px] text-indigo-500/70 font-normal mt-0.5;
+		@apply block text-[10px] text-teal-600/70 font-normal mt-0.5;
+	}
+
+	.ec-today-button {
+		@apply px-4 py-2 text-sm font-medium rounded-lg 
+               text-teal-700 bg-teal-50 
+               transition-all border border-teal-200 shadow-sm
+               hover:bg-teal-100 hover:border-teal-300;
+	}
+
+	.tooltip {
+		@apply absolute z-50 px-2 py-1 text-xs text-white bg-gray-800 rounded shadow-lg;
+		white-space: nowrap;
+	}
+
+	/* Improve visibility of good dates */
+	.ec-day.good-date-bg {
+		@apply hover:shadow-inner transition-all duration-200;
+	}
+
+	.ec-day.good-date-bg .ec-day-number {
+		@apply text-white font-semibold;
+	}
+
+	/* Add a subtle glow effect on hover */
+	.ec-day.good-date-bg:hover {
+		@apply shadow-inner shadow-indigo-500/20;
+	}
+
+	/* When today is also a good date */
+	.ec-day.ec-today.good-date-bg {
+		@apply bg-gradient-to-br from-indigo-500 to-indigo-600
+               ring-1 ring-inset ring-indigo-300;
+	}
+
+	.ec-day.ec-today.good-date-bg .ec-day-number {
+		@apply text-white font-semibold;
+	}
+
+	.ec-day.ec-today.good-date-bg .ec-day-number::after {
+		@apply text-indigo-100;
 	}
 }
