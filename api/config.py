@@ -22,6 +22,12 @@ class Settings(BaseSettings):
     log_max_size: int = 10 * 1024 * 1024  # 10 MB
     log_backup_count: int = 5
 
+    # OpenAI settings
+    openai_api_key: str = "sk-your-key-here"
+    openai_model: str = "gpt-3.5-turbo"
+    openai_temperature: float = 0.7
+    openai_max_tokens: int = 200
+
     class Config:
         env_prefix = "GOOD_DATES_"
         case_sensitive = False

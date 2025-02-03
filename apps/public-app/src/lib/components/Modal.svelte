@@ -1,92 +1,142 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { createEventDispatcher } from 'svelte';
 
-	export let show = false;
-	export let title: string;
+	export let isOpen = false;
+	export let title = '';
 
-	let dialog: HTMLDialogElement;
+	const dispatch = createEventDispatcher();
 
-	onMount(() => {
-		if (show) {
-			dialog.showModal();
+	function handleClose() {
+		dispatch('close');
+	}
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape' && isOpen) {
+			handleClose();
 		}
-	});
-
-	$: if (dialog && show) {
-		dialog.showModal();
-	} else if (dialog && !show) {
-		dialog.close();
 	}
 
-	function closeModal() {
-		show = false;
-	}
-
-	function handleClose(event: Event) {
-		if (event.target === dialog) {
-			closeModal();
+	function handleBackdropClick(event: MouseEvent) {
+		if (event.target === event.currentTarget) {
+			handleClose();
 		}
 	}
 </script>
 
-{#if show}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<dialog
-		bind:this={dialog}
-		class="backdrop:bg-gray-800/50 rounded-lg shadow-xl p-0 w-full max-w-lg"
-		on:click={handleClose}
+{#if isOpen}
+	<div
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="modal-title"
+		class="modal-backdrop"
+		in:fade={{ duration: 200 }}
+		out:fade={{ duration: 200 }}
+		on:click={handleBackdropClick}
+		on:keydown={handleKeydown}
+		tabindex="-1"
 	>
-		<div
-			transition:fade={{ duration: 200 }}
-			class="relative bg-white rounded-lg shadow-xl"
-			role="dialog"
-			aria-modal="true"
-			aria-labelledby="modal-title"
-		>
-			<div class="flex justify-between items-center p-4 border-b">
-				<h2 id="modal-title" class="text-xl font-semibold">{title}</h2>
-				<button
-					on:click={closeModal}
-					class="text-gray-500 hover:text-gray-700 p-2 rounded-lg transition-colors"
-					aria-label="Close modal"
-				>
-					<span aria-hidden="true">✕</span>
-				</button>
+		<div class="modal-content" on:click|stopPropagation>
+			<div class="modal-header">
+				<h2 id="modal-title">{title}</h2>
+				<button class="close-button" on:click={handleClose} aria-label="Close modal"> × </button>
 			</div>
-			<div class="p-4">
+			<div class="modal-body">
 				<slot />
 			</div>
-			<div class="flex justify-end gap-2 p-4 border-t bg-gray-50">
+			<div class="modal-footer">
 				<slot name="footer">
-					<button
-						on:click={closeModal}
-						class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
-					>
-						Close
-					</button>
+					<button on:click={handleClose} class="close-modal-button"> Close </button>
 				</slot>
 			</div>
 		</div>
-	</dialog>
+	</div>
 {/if}
 
 <style>
-	dialog {
-		@apply border-0;
+	.modal-backdrop {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		backdrop-filter: blur(2px);
 	}
 
-	dialog::backdrop {
-		@apply backdrop-blur-sm;
+	.modal-content {
+		background: white;
+		border-radius: 8px;
+		padding: 1.5rem;
+		max-width: 500px;
+		width: 90%;
+		position: relative;
+		max-height: 90vh;
+		overflow-y: auto;
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 	}
 
-	/* Prevent dialog from being highlighted */
-	dialog:focus {
-		outline: none;
+	.modal-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid var(--color-outline, #e2e8f0);
 	}
 
-	/* Add focus styles to the dialog content instead */
-	dialog > div:focus {
-		@apply ring-2 ring-indigo-500 ring-opacity-50;
+	.modal-header h2 {
+		margin: 0;
+		font-size: 1.25rem;
+		font-weight: 600;
+	}
+
+	.modal-body {
+		margin: 1rem 0;
+	}
+
+	.modal-footer {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.5rem;
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--color-outline, #e2e8f0);
+	}
+
+	.close-button {
+		background: none;
+		border: none;
+		font-size: 1.5rem;
+		cursor: pointer;
+		padding: 0.5rem;
+		border-radius: 4px;
+		transition: background-color 0.2s;
+	}
+
+	.close-button:hover {
+		background-color: var(--color-surface-variant, #f8fafc);
+	}
+
+	.close-button:focus {
+		outline: 2px solid var(--color-primary, #4f46e5);
+		outline-offset: 2px;
+	}
+
+	.close-modal-button {
+		padding: 0.5rem 1rem;
+		background: var(--color-surface-variant, #f8fafc);
+		color: var(--color-on-surface, #1f2937);
+		border: 1px solid var(--color-outline, #e2e8f0);
+		border-radius: 6px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.close-modal-button:hover {
+		background: var(--color-surface, white);
+		border-color: var(--color-primary, #4f46e5);
+		color: var(--color-primary, #4f46e5);
 	}
 </style>

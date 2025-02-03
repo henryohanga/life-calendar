@@ -3,11 +3,11 @@
 	import { fade } from 'svelte/transition';
 	import Calendar from '@event-calendar/core';
 	import dayGridPlugin from '@event-calendar/day-grid';
-	import type { GoodDatesResponse } from '$lib/types';
+	import type { GoodDateResponse } from '$lib/types';
 	import Tooltip from './Tooltip.svelte';
 	import Modal from './Modal.svelte';
 
-	export let goodDates: GoodDatesResponse;
+	export let goodDates: GoodDateResponse;
 	let calendarEl: HTMLElement;
 	let selectedDate: string | null = null;
 	let calendar: Calendar;

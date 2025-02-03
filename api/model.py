@@ -1,5 +1,5 @@
 from datetime import date
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, Field, validator
 from api.docs import GOOD_DATES_EXAMPLE
 
@@ -9,26 +9,27 @@ class GoodDateRequest(BaseModel):
         ...,
         description="Birth date in YYYY-MM-DD format",
         example="1990-01-01",
-        pattern=r"^\d{4}-\d{2}-\d{2}$",
     )
     match_on_single_digit: bool = Field(
-        default=True, description="Whether to reduce numbers to a single digit"
+        True,
+        description="Whether to match on single digit numerology",
     )
     year: Optional[int] = Field(
-        default=None,
-        description="Year to find dates for (defaults to current year)",
-        ge=1900,
-        le=2100,
+        None,
+        description="Year to calculate dates for (defaults to current year)",
+    )
+    include_zodiac: bool = Field(
+        False,
+        description="Whether to include zodiac sign information",
     )
 
     @validator("birth_date")
     def validate_birth_date(cls, v):
         try:
-            year, month, day = map(int, v.split("-"))
-            date(year, month, day)
+            date.fromisoformat(v)
             return v
-        except (ValueError, TypeError):
-            raise ValueError("Invalid birth date format. Use YYYY-MM-DD")
+        except ValueError:
+            raise ValueError("birth_date must be in YYYY-MM-DD format")
 
     class Config:
         schema_extra = {
@@ -36,6 +37,7 @@ class GoodDateRequest(BaseModel):
                 "birth_date": "1990-01-01",
                 "match_on_single_digit": True,
                 "year": 2024,
+                "include_zodiac": False,
             }
         }
 
@@ -43,11 +45,13 @@ class GoodDateRequest(BaseModel):
 class GoodDateResponse(BaseModel):
     dates: List[str] = Field(
         ...,
-        description="List of dates that match your numerology number",
-        example=["2024-01-01", "2024-01-10", "2024-01-19"],
+        description="List of good dates",
+        example=["2024-01-01", "2024-01-10"],
     )
     numerology_number: int = Field(
-        ..., description="Your numerology number", example=7, ge=1, le=9
+        ...,
+        description="Your numerology number",
+        example=7,
     )
     number_meaning: str = Field(
         ...,
@@ -55,7 +59,13 @@ class GoodDateResponse(BaseModel):
         example="Analysis, spirituality, and wisdom",
     )
     total_matches: int = Field(
-        ..., description="Total number of matching dates found", example=36
+        ...,
+        description="Total number of matching dates found",
+        example=36,
+    )
+    zodiac_sign: Optional[Dict[str, Any]] = Field(
+        None,
+        description="Zodiac sign information and recommendations",
     )
 
     class Config:

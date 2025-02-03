@@ -52,17 +52,23 @@ def read_root():
 
 
 @app.post("/good-dates/", response_model=GoodDateResponse)
-async def get_good_dates(data: GoodDateRequest, _: None = Depends(check_rate_limit)):
-    """Find dates that align with your numerology based on your birth date."""
+async def get_good_dates(
+    request: GoodDateRequest,
+    _rate_limit: None = Depends(check_rate_limit),
+) -> GoodDateResponse:
+    """Get good dates based on numerology and zodiac sign."""
     try:
-        year = data.year or datetime.now().year
         logger.info(
-            f"Calculating good dates for birth_date={data.birth_date}, year={year}"
+            f"Calculating good dates for birth_date={request.birth_date}, year={request.year}"
         )
-        dates, numerology_number, number_meaning = get_cached_good_dates(
-            birth_date=data.birth_date,
-            year=year,
-            match_on_single_digit=data.match_on_single_digit,
+
+        dates, numerology_number, number_meaning, zodiac_info = (
+            await get_cached_good_dates(
+                birth_date=request.birth_date,
+                year=request.year or datetime.now().year,
+                match_on_single_digit=request.match_on_single_digit,
+                include_zodiac=request.include_zodiac,
+            )
         )
 
         return GoodDateResponse(
@@ -70,10 +76,15 @@ async def get_good_dates(data: GoodDateRequest, _: None = Depends(check_rate_lim
             numerology_number=numerology_number,
             number_meaning=number_meaning,
             total_matches=len(dates),
+            zodiac_sign=zodiac_info if request.include_zodiac else None,
         )
-    except ValueError as e:
-        logger.error(f"Invalid request: {str(e)}")
-        raise HTTPException(status_code=400, detail=str(e))
+
+    except Exception as e:
+        logger.error(f"Error processing request: {str(e)}")
+        raise HTTPException(
+            status_code=400,
+            detail=str(e),
+        )
 
 
 @app.post("/cache/clear")

@@ -1,0 +1,131 @@
+/* Calendar Container */
+.calendar-container {
+	margin-top: 2rem;
+	padding: 1.5rem;
+	background: var(--color-surface);
+	border-radius: 12px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.calendar {
+	height: 800px;
+	background: white;
+}
+
+/* Calendar Header */
+.fc-header-toolbar {
+	padding: 1rem;
+	margin-bottom: 1.5rem !important;
+}
+
+.fc-toolbar-title {
+	font-size: 1.25rem !important;
+	font-weight: 600;
+}
+
+/* Calendar Grid */
+.fc-theme-standard td,
+.fc-theme-standard th {
+	border-color: var(--color-outline);
+}
+
+.fc-day-today {
+	background: var(--color-surface-variant) !important;
+}
+
+/* Time Grid */
+.fc-timegrid-slot {
+	height: 3em !important;
+}
+
+.fc-timegrid-slot-label {
+	font-size: 0.875rem;
+	color: var(--color-on-surface);
+}
+
+/* Events */
+.fc-event {
+	border-radius: 4px;
+	border: none;
+	padding: 2px 4px;
+}
+
+.fc-event-title {
+	font-weight: 500;
+	font-size: 0.875rem;
+}
+
+.fc-event-time {
+	font-size: 0.75rem;
+	opacity: 0.9;
+}
+
+/* Buttons */
+.fc-button-primary {
+	background-color: var(--color-primary) !important;
+	border-color: var(--color-primary) !important;
+}
+
+.fc-button-primary:hover {
+	background-color: var(--color-primary-dark) !important;
+	border-color: var(--color-primary-dark) !important;
+}
+
+.fc-button-primary:not(:disabled):active,
+.fc-button-primary:not(:disabled).fc-button-active {
+	background-color: var(--color-primary-dark) !important;
+	border-color: var(--color-primary-dark) !important;
+}
+
+/* Legend */
+.legend {
+	display: flex;
+	gap: 2rem;
+	padding: 1rem;
+	background: var(--color-surface-variant);
+	border-radius: 8px;
+	margin-bottom: 1.5rem;
+}
+
+.legend-section {
+	flex: 1;
+}
+
+.legend-section h4 {
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-bottom: 0.75rem;
+}
+
+.legend-items {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.legend-item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+}
+
+.color-dot {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+}
+
+/* Power Period Indicator */
+.power-period {
+	opacity: 1 !important;
+}
+
+/* List View */
+.fc-list-event td {
+	padding: 8px !important;
+}
+
+.fc-list-event:hover td {
+	background-color: var(--color-surface-variant) !important;
+}
